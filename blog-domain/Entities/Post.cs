@@ -11,7 +11,7 @@ public sealed class Post
 
     public Title Title { get; private set; }
 
-    public Content Content { get; }
+    public Content Content { get; private set; }
 
     private Post(PostId id, UserId userId, Title title, Content content)
     {
@@ -32,5 +32,15 @@ public sealed class Post
         }
 
         Title = title;
+    }
+
+    public void UpdateContent(Content content)
+    {
+        if (content is null)
+        {
+            throw new ArgumentNullException(nameof(content));
+        }
+
+        Content = content;
     }
 }
