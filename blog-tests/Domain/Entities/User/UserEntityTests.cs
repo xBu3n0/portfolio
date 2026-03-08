@@ -3,7 +3,7 @@ using blog_domain.Entities;
 using blog_domain.Primitives;
 using Xunit;
 
-namespace blog_tests.Domain.Entities.User;
+namespace blog_tests.Domain.Entities.UserTests;
 
 public class UserEntityTests
 {
