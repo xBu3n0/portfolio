@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: blog
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - blog_data:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  blog-api:
+    image: mcr.microsoft.com/dotnet/sdk:10.0
+    working_dir: /src
+    command: bash -lc "dotnet build && ls && cd blog-api && dotnet watch run --urls http://0.0.0.0:80"
+    volumes:
+      - ./:/src/
+      - blog_api_bin:/src/blog-api/bin
+      - blog_api_obj:/src/blog-api/obj
+      - blog_infrastructure_bin:/src/blog-infrastructure/bin
+      - blog_infrastructure_obj:/src/blog-infrastructure/obj
+      - blog_application_bin:/src/blog-application/bin
+      - blog_application_obj:/src/blog-application/obj
+      - blog_domain_bin:/src/blog-domain/bin
+      - blog_domain_obj:/src/blog-domain/obj
+    ports:
+      - 80:80
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:80
+      BLOG_DATABASE_CONNECTION: Host=db;Port=5432;Database=blog;Username=postgres;Password=postgres
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  blog_data:
+  blog_api_bin:
+  blog_api_obj:
+  blog_infrastructure_bin:
+  blog_infrastructure_obj:
+  blog_application_bin:
+  blog_application_obj:
+  blog_domain_bin:
+  blog_domain_obj:

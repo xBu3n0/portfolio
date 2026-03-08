@@ -1,41 +1,53 @@
+using blog_api.Services.Auth;
+using blog_api.Services.Blog;
+using blog_application.Ports;
+using blog_application.Services;
+using blog_infrastructure.Database;
+using blog_infrastructure.Repositories;
+using blog_infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options => options.EnableAnnotations());
+builder.Services.AddControllers();
+
+const string defaultConnection = "Host=localhost;Database=blog;Username=blogadmin;Password=blogsecret";
+var connectionString = builder.Configuration["BLOG_DATABASE_CONNECTION"]
+    ?? builder.Configuration.GetConnectionString("BlogDatabase")
+    ?? defaultConnection;
+
+builder.Services.AddDbContext<BlogDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddScoped<IDatabaseMigrationService, DatabaseMigrationService>();
+builder.Services.AddScoped<IUserRepository, EfUserRepository>();
+builder.Services.AddScoped<IPostRepository, EfPostRepository>();
+builder.Services.AddScoped<ICredentialRepository, EfCredentialRepository>();
+builder.Services.AddScoped<IMessageBus, ConsoleMessageBus>();
+builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
+
+builder.Services.AddScoped<AuthServiceContext>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<BlogServiceContext>();
+builder.Services.AddScoped<BlogService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+using (var scope = app.Services.CreateScope())
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    var migrator = scope.ServiceProvider.GetRequiredService<IDatabaseMigrationService>();
+    await migrator.MigrateAsync();
+}
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
