@@ -1,7 +1,7 @@
 using blog_api.Services.Auth.Contracts;
-using blog_application.Commands.CreateUser;
-using blog_application.Commands.LoginUser;
-using blog_domain.Entities;
+using blog_application.Services.Auth.Commands.CreateUser;
+using blog_application.Services.Auth.Commands.LoginUser;
+using blog_domain.Services.Auth.Entities;
 using blog_domain.Primitives;
 
 namespace blog_api.Services.Auth;

@@ -1,5 +1,5 @@
 using System;
-using blog_application.Services;
+using blog_application.Services.Auth;
 using blog_domain.Primitives;
 using BCrypt.Net;
 

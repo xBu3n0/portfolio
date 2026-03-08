@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using blog_application.Ports;
+using blog_application.Ports.Core;
 using blog_domain.Events;
 
 namespace blog_infrastructure.Services;

@@ -1,6 +1,6 @@
 using blog_api.Services.Blog.Contracts;
-using blog_application.Commands.CreatePost;
-using blog_domain.Entities;
+using blog_application.Services.Blog.Commands.CreatePost;
+using blog_domain.Services.Blog.Entities;
 using blog_domain.Primitives;
 
 namespace blog_api.Services.Blog;

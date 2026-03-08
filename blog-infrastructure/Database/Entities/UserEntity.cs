@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using blog_domain.Entities;
+using blog_domain.Services.Auth.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace blog_infrastructure.Database.Entities;

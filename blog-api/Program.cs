@@ -1,7 +1,9 @@
 using blog_api.Services.Auth;
 using blog_api.Services.Blog;
-using blog_application.Ports;
-using blog_application.Services;
+using blog_application.Ports.Auth;
+using blog_application.Ports.Blog;
+using blog_application.Ports.Core;
+using blog_application.Services.Auth;
 using blog_infrastructure.Database;
 using blog_infrastructure.Repositories;
 using blog_infrastructure.Services;

@@ -1,5 +1,6 @@
-using blog_application.Ports;
-using blog_application.Services;
+using blog_application.Ports.Auth;
+using blog_application.Ports.Core;
+using blog_application.Services.Auth;
 
 namespace blog_api.Services.Auth;
 

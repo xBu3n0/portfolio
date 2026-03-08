@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using blog_application.Ports;
+using blog_application.Ports.Auth;
 using blog_domain.Primitives;
 using blog_infrastructure.Database;
 using Microsoft.EntityFrameworkCore;

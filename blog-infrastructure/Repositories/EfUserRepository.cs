@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using blog_application.Ports;
-using blog_domain.Entities;
+using blog_application.Ports.Auth;
+using blog_domain.Services.Auth.Entities;
 using blog_domain.Primitives;
 using blog_infrastructure.Database;
 using blog_infrastructure.Database.Entities;

@@ -1,4 +1,5 @@
-using blog_application.Ports;
+using blog_application.Ports.Blog;
+using blog_application.Ports.Core;
 
 namespace blog_api.Services.Blog;
 
