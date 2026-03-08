@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using blog_application.Services.Auth.Commands.CreateUser;
 using blog_application.Ports.Auth;
 using blog_application.Ports.Core;
@@ -9,7 +6,6 @@ using blog_domain.Events;
 using blog_domain.Services.Auth.Events;
 using blog_domain.Primitives;
 using Moq;
-using Xunit;
 
 namespace blog_tests.Application.Services.Auth.Commands.CreateUser;
 
@@ -55,7 +51,7 @@ public class CreateUserCommandHandlerTests
         messageBus.Verify(bus => bus.PublishAsync(It.IsAny<IDomainEvent[]>(), It.IsAny<CancellationToken>()), Times.Once);
 
         Assert.Contains(dispatchedEvents, e => e is UserCreatedEvent);
-        
+
         Assert.NotNull(createdUser);
         Assert.Equal(command.UserId, createdUser.Id);
         Assert.Equal(command.Username, createdUser.Username);

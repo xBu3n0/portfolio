@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using blog_application.Services.Blog.Commands.CreatePost;
 using blog_application.Ports.Blog;
 using blog_application.Ports.Core;
@@ -9,7 +6,6 @@ using blog_domain.Events;
 using blog_domain.Services.Blog.Events;
 using blog_domain.Primitives;
 using Moq;
-using Xunit;
 
 namespace blog_tests.Application.Services.Blog.Commands.CreatePost;
 
@@ -51,7 +47,7 @@ public class CreatePostCommandHandlerTests
 
         // Act
         var createdPost = await handler.Handle(command, CancellationToken.None);
-        
+
         // Assert
         postRepository.Verify(repo => repo.AddAsync(It.IsAny<Post>(), It.IsAny<CancellationToken>()), Times.Once);
         messageBus.Verify(bus => bus.PublishAsync(It.IsAny<IDomainEvent[]>(), It.IsAny<CancellationToken>()), Times.Once);

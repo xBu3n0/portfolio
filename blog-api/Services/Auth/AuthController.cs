@@ -7,13 +7,6 @@ namespace blog_api.Services.Auth;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly AuthService _authService;
-
-    public AuthController(AuthService authService)
-    {
-        _authService = authService;
-    }
-
     [HttpPost("register")]
     public async Task<IResult> Register(CreateUserRequest request)
     {

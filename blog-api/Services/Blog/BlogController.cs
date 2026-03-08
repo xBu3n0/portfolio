@@ -8,10 +8,7 @@ namespace blog_api.Services.Blog;
 public class BlogController : ControllerBase
 {
     [HttpGet("posts")]
-    public async Task<IResult> Store(
-        CreatePostRequest request,
-        BlogService blogService,
-        CancellationToken cancellationToken)
+    public async Task<IResult> Store(CreatePostRequest request)
     {
         return Results.BadRequest(new { error = "Not implemented yet." });
     }

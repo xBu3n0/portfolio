@@ -30,9 +30,7 @@ builder.Services.AddScoped<IMessageBus, ConsoleMessageBus>();
 builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
 
 builder.Services.AddScoped<AuthServiceContext>();
-builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<BlogServiceContext>();
-builder.Services.AddScoped<BlogService>();
 
 var app = builder.Build();
 
