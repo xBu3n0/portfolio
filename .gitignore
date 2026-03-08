@@ -1,0 +1,46 @@
+## Ignore Visual Studio temporary files, build results, and user-specific files
+*.user
+*.rsuser
+*.suo
+*.cache
+*.log
+*.vspscc
+*.vssscc
+*.dbmdl
+
+# Build results
+bin/
+obj/
+*/bin/
+*/obj/
+
+# Rider
+.idea/
+
+# Dotnet specific
+.vs/
+*.DotSettings.user
+
+# NuGet
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# JetBrains Rider
+*.sln.iml
+
+# Paket
+paket-files/
+
+# Microsoft Azure Web Apps publish settings
+*.Publish.xml
+
+# Temporary files
+*.tmp
+*.temp
+
