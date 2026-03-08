@@ -28,8 +28,8 @@ public sealed class CreateUserCommandHandler
                         [
                             new UserCreatedEvent(user.Id, user.Username, user.Email)
                         ],
-                        cancellationToken
-                    );
+                            cancellationToken
+                        );
                 }
                 return user;
             }, cancellationToken);

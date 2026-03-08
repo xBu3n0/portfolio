@@ -28,8 +28,8 @@ public sealed class CreatePostCommandHandler
                         [
                             new PostCreatedEvent(post.Id, post.UserId, post.Title, post.Content)
                         ],
-                        cancellationToken
-                    );
+                            cancellationToken
+                        );
                 }
                 return post;
             }, cancellationToken);

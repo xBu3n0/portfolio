@@ -24,7 +24,7 @@ jobs:
         run: dotnet tool restore
 
       - name: Verify formatting
-        run: dotnet tool run dotnet-format --verify-no-changes blog.sln
+        run: dotnet format --verify-no-changes blog.sln
 
       - name: Restore solution
         run: dotnet restore blog.sln
