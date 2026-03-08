@@ -1,46 +1,34 @@
-## Ignore Visual Studio temporary files, build results, and user-specific files
-*.user
-*.rsuser
+# Ignore build outputs
+**/bin/
+**/obj/
+
+# IDE configs
+.vs/
+.vscode/
 *.suo
+*.user
 *.cache
 *.log
-*.vspscc
-*.vssscc
-*.dbmdl
 
-# Build results
-bin/
-obj/
-*/bin/
-*/obj/
+# OS files
+.DS_Store
+Thumbs.db
 
-# Rider
-.idea/
+# Coverage artifacts
+coverage.*
+*.lcov
 
-# Dotnet specific
-.vs/
-*.DotSettings.user
-
-# NuGet
+# NuGet packages
 *.nupkg
-*.snupkg
-project.lock.json
-project.fragment.lock.json
-artifacts/
+**/*.snupkg
 
-# ASP.NET Scaffolding
-ScaffoldingReadMe.txt
+# Secret/environment files
+*.env
+.env.*
 
-# JetBrains Rider
-*.sln.iml
+# Test runner artifacts
+*.trx
+_nuget/
 
-# Paket
-paket-files/
-
-# Microsoft Azure Web Apps publish settings
-*.Publish.xml
-
-# Temporary files
-*.tmp
-*.temp
-
+# Misc
+*.db
