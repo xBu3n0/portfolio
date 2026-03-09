@@ -16,22 +16,22 @@ public sealed class CreateUserCommandHandler
         _messageBus = messageBus;
     }
 
-    public Task<User?> Handle(CreateUserCommand command, CancellationToken cancellationToken = default)
+    public async Task<User> Handle(CreateUserCommand command, CancellationToken cancellationToken = default)
     {
-        return _userRepository.AddAsync(User.Create(command.UserId, command.Username, command.Email), cancellationToken)
-            .ContinueWith(userTask =>
-            {
-                var user = userTask.Result;
-                if (user is not null)
-                {
-                    _messageBus.PublishAsync(
-                        [
-                            new UserCreatedEvent(user.Id, user.Username, user.Email)
-                        ],
-                            cancellationToken
-                        );
-                }
-                return user;
-            }, cancellationToken);
+        var user = await _userRepository.AddAsync(User.Create(command.UserId, command.Username, command.Email), cancellationToken);
+
+        if (user is null)
+        {
+            throw new InvalidOperationException("Failed to create user.");
+        }
+
+        await _messageBus.PublishAsync(
+            [
+                new UserCreatedEvent(user.Id, user.Username, user.Email)
+            ],
+            cancellationToken
+        );
+
+        return user;
     }
 }

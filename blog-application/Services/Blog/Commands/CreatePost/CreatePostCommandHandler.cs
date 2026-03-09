@@ -16,22 +16,22 @@ public sealed class CreatePostCommandHandler
         _messageBus = messageBus;
     }
 
-    public Task<Post?> Handle(CreatePostCommand command, CancellationToken cancellationToken = default)
+    public async Task<Post> Handle(CreatePostCommand command, CancellationToken cancellationToken = default)
     {
-        return _postRepository.AddAsync(Post.Create(command.PostId, command.UserId, command.Title, command.Content), cancellationToken)
-            .ContinueWith(userTask =>
-            {
-                var post = userTask.Result;
-                if (post is not null)
-                {
-                    _messageBus.PublishAsync(
-                        [
-                            new PostCreatedEvent(post.Id, post.UserId, post.Title, post.Content)
-                        ],
-                            cancellationToken
-                        );
-                }
-                return post;
-            }, cancellationToken);
+        var post = await _postRepository.AddAsync(Post.Create(command.PostId, command.UserId, command.Title, command.Content), cancellationToken);
+
+        if (post is null)
+        {
+            throw new InvalidOperationException("Failed to create post.");
+        }
+
+        await _messageBus.PublishAsync(
+            [
+                new PostCreatedEvent(post.Id, post.UserId, post.Title, post.Content)
+            ],
+            cancellationToken
+        );
+
+        return post;
     }
 }
